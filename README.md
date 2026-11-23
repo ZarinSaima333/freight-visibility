@@ -2,6 +2,14 @@
 
 A local freight dashboard for reviewing delivery performance, investigating individual shipments, and returning data issues to operations. It seeds PostgreSQL from the supplied CSV on the first startup against an empty shipment table.
 
+## What was built
+
+- **Data import and cleaning.** FastAPI seeds PostgreSQL from the supplied CSV and supports replace or append uploads. It normalizes port codes, deduplicates shipments, preserves original rows for audit, and flags invalid dates and weights.
+- **Shipment dashboard.** React and Recharts show shipment totals, eligible weight, on-time delivery by grace period, trade lanes, delays, and carrier performance. Shipment search opens the original values and any flags.
+- **Data quality.** A reconciliation view shows how source rows became unique shipments. Operations can filter flagged shipments and export the rows for correction.
+- **Ask the Data.** Gemini generates a SQL query from a question. The backend validates it and runs it in a read-only PostgreSQL transaction. Built-in questions can use local SQL templates when Gemini is unavailable.
+- **Verification.** The CLI prints headline metrics, and 21 pytest cases cover data cleaning and SQL validation.
+
 ## Run locally
 
 Use Python 3.11+, Node.js 20+, and PostgreSQL. Start your locally installed PostgreSQL server, then create an empty database with a role that can create tables in its public schema.
